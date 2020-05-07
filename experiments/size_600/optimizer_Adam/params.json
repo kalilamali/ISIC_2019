@@ -1,0 +1,9 @@
+{
+    "size": 600,
+    "batch_size": 4,
+    "num_workers": 8,
+    "network": "efficientnetb7",
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "num_epochs": 100
+}
