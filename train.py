@@ -24,6 +24,7 @@ parser.add_argument('--data_dir', default='data/isic19', help="folder containing
 parser.add_argument('--model_dir', default='experiments/model1', help="folder containing params.json")
 parser.add_argument('--net_dir', default='networks_isic', help="folder containing artificial_neural_network.py")
 parser.add_argument('--resume', default=False, help="resume training for more epochs")
+parser.add_argument('--fold_start', default=1, help="change only if resumming from fold different than 1")
 parser.add_argument('--folds', default=3, help='cross validation folds', type=int)
 
 
@@ -201,7 +202,7 @@ if __name__ == '__main__':
 
     # Fold loop
     dfs = {}
-    for fold in range(1, args.folds+1):
+    for fold in range(args.fold_start, args.folds+1):
 
         net = myutils.get_network(args.net_dir, params.network)
         optimizer = myutils.get_optimizer(params.optimizer, net, params.learning_rate)

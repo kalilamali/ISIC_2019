@@ -7,7 +7,7 @@ from torch import nn
 from efficientnet_pytorch import EfficientNet
 
 
-def efficientnetb0_ft(unfreeze=True):
+def efficientnetb7_ft(unfreeze=True):
     """
     Unfreeze(True) all the model weights.
     Freeze(False) the convolutional layers only.
@@ -44,7 +44,7 @@ def loss_fn(weight):
 
 
 if __name__ == '__main__':
-    net = efficientnetb0_ft()
+    net = efficientnetb7_ft()
     print(net)
     total_params, total_trainable_params = myutils.get_num_parameters(net)
     print('Total: {:,}\tTrainable: {:,}'.format(total_params, total_trainable_params))
