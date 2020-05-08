@@ -188,12 +188,12 @@ def average_metrics(folds, model_dir):
         if key[:3] == 'acc':
             total_acc += metrics[key]
 
-    metrics['total_loss'] = total_loss/fold
-    metrics['total_acc'] = total_acc/fold
+    metrics['losscv'] = total_loss/fold
+    metrics['acccv'] = total_acc/fold
 
     # Save metrics
     m = json.dumps(metrics)
-    f = open(model_dir + '/cv_metrics' +'.json', 'w')
+    f = open(model_dir + '/metricscv' +'.json', 'w')
     f.write(m)
     f.close()
 
