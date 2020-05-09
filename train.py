@@ -24,7 +24,7 @@ parser.add_argument('--data_dir', default='data/isic19', help="folder containing
 parser.add_argument('--model_dir', default='experiments/model1', help="folder containing params.json")
 parser.add_argument('--net_dir', default='networks_isic', help="folder containing artificial_neural_network.py")
 parser.add_argument('--resume', default=False, help="resume training for more epochs")
-parser.add_argument('--fold_start', default=1, help="change only if resumming from fold different than 1")
+parser.add_argument('--fold_start', default=1, help="change only if resumming from fold different than 1", type=int)
 parser.add_argument('--folds', default=3, help='cross validation folds', type=int)
 
 
@@ -81,7 +81,7 @@ def train_eval(fold, dataloaders, dataset_sizes, net, criterion, optimizer, num_
     for epoch in range(epoch, num_epochs+1):
         if epochs_no_improve == patience:
             print('Early stop')
-            logging_process.info(f'Model: {args.model_dir}\tEarly stop: {epoch}')
+            logging_process.info(f'Model: {args.model_dir}\tFold:{fold}\tEarly stop: {epoch}')
             break
         logging_train.info(f'Epoch {epoch}/{num_epochs}')
         print(f'Epoch {epoch}/{num_epochs}')
