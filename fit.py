@@ -83,6 +83,7 @@ def train_eval(dataloaders, dataset_sizes, net, criterion, optimizer, num_epochs
     for epoch in range(epoch, num_epochs+1):
         if epochs_no_improve == patience:
             print('Early stop')
+            logging_process.info(f'Model: {args.model_dir}\tFold:{fold}\tEarly stop: {epoch}')
             break
         logging_train.info(f'Epoch {epoch}/{num_epochs}')
         print(f'Epoch {epoch}/{num_epochs}')
