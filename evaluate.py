@@ -54,6 +54,7 @@ def eval(file, dataloaders, dataset_sizes, net, criterion):
 
     predictions = []
     probabilities = []
+    all_probabilities = []
 
     # Track statistics
     running_loss = 0.0
@@ -68,6 +69,7 @@ def eval(file, dataloaders, dataset_sizes, net, criterion):
         probs, preds = torch.max(outputs, 1)
         loss = criterion(outputs, labels)
 
+        all_probabilities.extend(outputs.cpu().detach().numpy())
         probabilities.extend(probs.cpu().detach().numpy())
         predictions.extend(preds.cpu().detach().numpy())
 
@@ -81,7 +83,7 @@ def eval(file, dataloaders, dataset_sizes, net, criterion):
         logging_eval.info('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, batch_loss, batch_acc))
         print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, batch_loss, batch_acc))
 
-    return probabilities, predictions
+    return probabilities, predictions, all_probabilities
 
 
 if __name__ == '__main__':
@@ -123,7 +125,7 @@ if __name__ == '__main__':
     print('-'*10)
     num_steps = len(frame)/params.batch_size
     logging_process.info(f'Model: {args.model_dir}, evaluation has started for {num_steps} steps')
-    probabilities, predictions = eval(args.file, dataloaders, dataset_sizes, net, criterion)
+    probabilities, predictions, all_probabilities = eval(args.file, dataloaders, dataset_sizes, net, criterion)
 
     logging_process.info(f'Model: {args.model_dir}, evaluation has ended')
 
@@ -131,6 +133,7 @@ if __name__ == '__main__':
     df = pd.read_csv(fname)
     df['probabilities'] = probabilities
     df['predictions'] = predictions
+    df['all_probabilities'] = all_probabilities
 
     results_dir = os.path.join(args.model_dir, 'results')
     if not os.path.exists(results_dir):
