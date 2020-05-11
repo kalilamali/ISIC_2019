@@ -36,10 +36,10 @@ def train_eval(dataloaders, dataset_sizes, net, criterion, optimizer, num_epochs
     # Logs
     fname = os.path.join(args.model_dir, f'train.log')
     logging_train = myutils.setup_logger(fname)
-    fname = os.path.join(args.model_dir,f'probs_val.log')
-    logging_probs = myutils.setup_logger(fname)
-    fname = os.path.join(args.model_dir, f'preds_val.log')
-    logging_preds = myutils.setup_logger(fname)
+    #fname = os.path.join(args.model_dir,f'probs_val.log')
+    #logging_probs = myutils.setup_logger(fname)
+    #fname = os.path.join(args.model_dir, f'preds_val.log')
+    #logging_preds = myutils.setup_logger(fname)
 
     myutils.myseed(seed=42)  # Reproducibility
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -113,9 +113,9 @@ def train_eval(dataloaders, dataset_sizes, net, criterion, optimizer, num_epochs
                     outputs = net(inputs)
                     probs, preds = torch.max(outputs, 1)
                     loss = criterion(outputs, labels)
-                    if phase == 'val':
-                        logging_probs.info(probs.cpu().detach().numpy())
-                        logging_preds.info(preds.cpu().detach().numpy())
+                    #if phase == 'val':
+                    #    logging_probs.info(probs.cpu().detach().numpy())
+                    #    logging_preds.info(preds.cpu().detach().numpy())
 
                     # backward + optimize only if in training phase
                     if phase == 'train':
