@@ -85,7 +85,7 @@ def data_split(data_dir, folds):
     logging_data_process.info(f"Saved: {os.path.join(data_dir, 'test.csv')}")
 
     train, val = train_test_split(train_val, test_size=0.2, random_state=seed, shuffle=True)
-    train, val = train_val.reset_index(drop=True), test.reset_index(drop=True)
+    train, val = train_val.reset_index(drop=True), val.reset_index(drop=True)
     train.to_csv(os.path.join(data_dir, 'train.csv'), index=False)
     logging_data_process.info(f"Saved: {os.path.join(data_dir, 'train.csv')}")
     val.to_csv(os.path.join(data_dir, 'val.csv'), index=False)
