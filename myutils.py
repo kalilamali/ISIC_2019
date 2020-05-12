@@ -2,17 +2,17 @@
 
 """
 Myutils.py
-This script contains the auxiliary functions used in the DERM project.
+This script contains the auxiliary functions used in the ISIC 2019 project.
 
 Author      K.Loaiza
 Comments    Created: Thursday, April 16, 2020
 """
 
 import os
-import logging
 import json
-import random
 import torch
+import random
+import logging
 import numpy as np
 import importlib.util
 import torch.optim as optim
@@ -37,10 +37,9 @@ def myseed(seed=42):
 
 def get_num_parameters(net):
     """
-    Function that takes a pytorch neural network and returns the total number of parameters
+    Function that takes a neural network and returns the total number of parameters
     and the total number of trainable parameters.
     """
-    # Reproducibility
     myseed(seed=42)
     total_params = sum(p.numel() for p in net.parameters())
     total_trainable_params = sum(p.numel() for p in net.parameters() if p.requires_grad)
@@ -52,7 +51,6 @@ def get_weight(train):
   Function that takes a dataframe of training data and returns a tensor of
   weights according to the number of classes
   """
-  # Reproducibility
   myseed(seed=42)
   counts = train.label_code.value_counts().to_list()
   summed = sum(counts)
@@ -110,12 +108,16 @@ class Params():
         return self.__dict__
 
 
-def get_loaders(net_dir, loaders_name):
+def get_module(dir_path, script_name):
     """
-    Function that takes a neural network path and name
-    and returns the neural network object from a file inside a folder.
+    Function that takes a path to a dir that contains a script .py
+    and returns the contents to be used as python modules.
+    NOTE:
+    **This function is only used with loaders because using it with neural networks
+    or loss functions would imply calling their name explicitaly which is something
+    we do not want to do in this project.***
     """
-    fname = os.path.join(net_dir, f'{loaders_name}.py')
+    fname = os.path.join(dir_dir, f'{script_name}.py')
     spec = importlib.util.spec_from_file_location(net_dir, fname)
     mymodule = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mymodule)
@@ -213,35 +215,3 @@ def run_fast_scandir(dir, ext):    # dir: str, ext: list
             if os.path.splitext(f.name)[1].lower() in ext:
                 files.append(f.path)
     return files
-
-
-def read_log(path):
-    """
-    Function that given a path to a .log file
-    returns a 4 lists.
-    .log file has to be in the format:
-    Epoch 1/3
-    train Loss: 0.8470 Acc: 0.4167
-    val Loss: 0.8133 Acc: 0.5000
-    ...
-    """
-    train_loss, val_loss = [], []
-    train_acc, val_acc = [],[]
-    previous_line = ''
-    with open(path) as f:
-        for line in f:
-            if line != previous_line:
-                if line.startswith('Epoch'):
-                    pass
-                else:
-                    loss  = round(float(line.split()[2]),2)
-                    acc = round(float(line.split()[4]),2)
-                if line.startswith('train'):
-                    train_loss.append(loss)
-                    train_acc.append(acc)
-                elif line.startswith('val'):
-                    val_loss.append(loss)
-                    val_acc.append(acc)
-                # Restart before going to the next line
-                previous_line = line
-    return train_loss, val_loss, train_acc, val_acc

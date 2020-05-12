@@ -2,11 +2,11 @@ import torch
 import torchvision
 import myutils
 
-from torch.utils.data import DataLoader, Dataset
-from torchvision import transforms
 from PIL import Image
 from PIL import ImageFile
 ImageFile.LOAD_TRUNCATED_IMAGES = True
+from torchvision import transforms
+from torch.utils.data import DataLoader, Dataset
 
 
 def get_loaders(dfs, size=100, batch_size=1, num_workers=1):
@@ -33,7 +33,7 @@ def get_loaders(dfs, size=100, batch_size=1, num_workers=1):
         def __getitem__(self, index):
             try:
                 # Load image data and get label
-                X = Image.open(self.df['filenames'][index]).convert('RGB')
+                X = Image.open(self.df['image_path'][index]).convert('RGB')
                 y = torch.tensor(int(self.df['label_code'][index]))
             except IOError as err:
                 pass
@@ -56,14 +56,6 @@ def get_loaders(dfs, size=100, batch_size=1, num_workers=1):
                        'val' : transforms.Compose([transforms.Resize(size),
                                               transforms.CenterCrop((size,size)),
                                               transforms.ToTensor(),
-                                              transforms.Normalize(mean,std)]),
-                       'test' : transforms.Compose([transforms.Resize(size),
-                                              transforms.CenterCrop((size,size)),
-                                              transforms.ToTensor(),
-                                              transforms.Normalize(mean,std)]),
-                       'unknown' : transforms.Compose([transforms.Resize(size),
-                                              transforms.CenterCrop((size,size)),
-                                              transforms.ToTensor(),
                                               transforms.Normalize(mean,std)])}
 
     # Sets
@@ -72,5 +64,5 @@ def get_loaders(dfs, size=100, batch_size=1, num_workers=1):
     dataset_sizes = {x: len(image_datasets[x]) for x in dfs.keys()}
     # Loaders
     dataloaders = {x: DataLoader(image_datasets[x], batch_size, num_workers) for x in dfs.keys()}
-
+    
     return dataloaders, dataset_sizes
