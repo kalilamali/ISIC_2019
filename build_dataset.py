@@ -24,12 +24,6 @@ parser.add_argument('--data_dir', default='data/binary', help="folder containing
 parser.add_argument('--folds', default=3, help='cross validation folds', type=int)
 
 
-def get_disease(row):
-    for c in df2.columns:
-        if row[c] == 1:
-            return c
-
-
 def load_data(data_dir):
     """
     Function that takes a folder, finds all .jpg files inside the folder,
@@ -48,6 +42,11 @@ def load_data(data_dir):
     fname = os.path.join(data_dir, 'labels.csv')
     df2 = pd.read_csv(fname)
     df2 = df2.set_index('image')
+    # Do not move function from here
+    def get_disease(row):
+        for c in df2.columns:
+            if row[c] == 1:
+                return c
     df2 = df2.apply(get_disease, axis=1).to_frame(name='label')
     df = pd.merge(df1, df2, left_index=True, right_index=True)
     df['label'] = df['label'].astype('category')
