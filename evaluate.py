@@ -53,7 +53,7 @@ def eval(file, dataloaders, dataset_sizes, net):
         #with tqdm(total=len(dataloaders[phase])) as t:
             # Track results
         predictions, probabilities, all_probabilities, in_labels = [],[],[],[]
-        for inputs, labels in enumerate(dataloaders[phase]):
+        for inputs, labels in dataloaders[phase]:
             inputs = inputs.to(device)
             labels = labels.to(device)
 
