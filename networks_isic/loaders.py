@@ -9,7 +9,7 @@ from torchvision import transforms
 from torch.utils.data import DataLoader, Dataset
 
 
-def get_loaders(dfs, size=100, batch_size=1, num_workers=1, shuffle=False):
+def get_loaders(dfs, size=100, batch_size=1, num_workers=1):
     """
     Function that takes a dictionary of dataframes and
     returns 2 dictionaries of pytorch dataloaders and dataset_sizes
@@ -35,7 +35,7 @@ def get_loaders(dfs, size=100, batch_size=1, num_workers=1, shuffle=False):
                 # Load image data and get label
                 X = Image.open(self.df['image_path'][index]).convert('RGB')
                 y = torch.tensor(int(self.df['label_code'][index]))
-                print(self.df['image_path'][index], self.df['label_code'][index])
+                print(f'{self.df['image_path'][index]}\t{self.df['label_code'][index]}')
             except IOError as err:
                 pass
 
