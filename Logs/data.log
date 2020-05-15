@@ -1,0 +1,9 @@
+15/05/2020 09:58:00 Script: build_dataset.py --data_dir fakedataset/isic19 --folds 1, device: cpu
+15/05/2020 09:58:53 Script: build_dataset.py --data_dir fakedataset/isic19 --folds 1, device: cpu
+15/05/2020 09:58:53 Script: load_data
+15/05/2020 09:58:53 Saved: fakedataset/isic19.csv
+15/05/2020 09:58:53 Saved: fakedataset/isic19.json
+15/05/2020 09:58:53 Script: data_split
+15/05/2020 09:58:53 Saved: fakedataset/isic19/test.csv
+15/05/2020 09:58:53 Saved: fakedataset/isic19/train.csv
+15/05/2020 09:58:53 Saved: fakedataset/isic19/val.csv

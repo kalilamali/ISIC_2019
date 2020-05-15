@@ -117,8 +117,8 @@ def get_module(dir_path, script_name):
     or loss functions would imply calling their name explicitaly which is something
     we do not want to do in this project.***
     """
-    fname = os.path.join(dir_dir, f'{script_name}.py')
-    spec = importlib.util.spec_from_file_location(net_dir, fname)
+    fname = os.path.join(dir_path, f'{script_name}.py')
+    spec = importlib.util.spec_from_file_location(dir_path, fname)
     mymodule = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mymodule)
     return mymodule

@@ -208,7 +208,7 @@ if __name__ == '__main__':
 
     # NETWORK SETTINGS
     # Data
-    loaders = myutils.get_loaders(args.net_dir, 'loaders')
+    loaders = myutils.get_module(args.net_dir, 'loaders')
     dataloaders, dataset_sizes = loaders.get_loaders(dfs, size=params.size, batch_size=params.batch_size, num_workers=params.num_workers)
     # Net
     net = myutils.get_network(args.net_dir, params.network)

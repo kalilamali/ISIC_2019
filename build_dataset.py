@@ -11,6 +11,7 @@ Comments    Created: Thursday, May 6, 2020
 import os
 import json
 import sys
+import torch
 import argparse
 import myutils
 import pandas as pd
@@ -127,12 +128,12 @@ if __name__ == '__main__':
 
     # Initialize main log file
     log_file = os.path.join(logs_dir_path, 'data.log')
-    logging_process = myutils.setup_logger(log_file, date=True)
+    logging_data_process = myutils.setup_logger(log_file, date=True)
 
     # Save commandline settings to log
     script_activated = ' '.join(sys.argv)
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    logging_process.info(f'Script: {script_activated}, device: {device}')
+    logging_data_process.info(f'Script: {script_activated}, device: {device}')
 
     # Build dataset
     logging_data_process.info('Script: load_data')

@@ -1,0 +1,7 @@
+15/05/2020 09:59:40 Script: fit.py --data_dir fakedataset/isic19 --model_dir experiments/N2, device: cpu
+15/05/2020 10:00:24 Script: fit.py --data_dir fakedataset/isic19 --model_dir experiments/N2, device: cpu
+15/05/2020 10:01:08 Script: fit.py --data_dir fakedataset/isic19 --model_dir experiments/N2, device: cpu
+15/05/2020 10:01:23 Script: fit.py --data_dir fakedataset/isic19 --model_dir experiments/N2, device: cpu
+15/05/2020 10:02:15 Script: fit.py --data_dir fakedataset/isic19 --model_dir experiments/N2, device: cpu
+15/05/2020 10:04:35 Model: experiments/N2	File: train.csv	Weight: tensor([0.5000, 0.1875, 0.1172, 0.1172, 0.0312, 0.0234, 0.0156, 0.0078])
+15/05/2020 10:04:35 Model: experiments/N2: , fitting has started for 100 epochs

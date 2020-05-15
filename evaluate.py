@@ -41,6 +41,7 @@ def eval(file, dataloaders, dataset_sizes, net):
     restore_path = os.path.join(args.model_dir, fname)
     checkpoint = torch.load(restore_path)
     net.load_state_dict(checkpoint['net_state_dict'])
+    net.eval()
 
     # Track results
     predictions, probabilities, all_probabilities = [],[],[]
