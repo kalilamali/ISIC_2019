@@ -94,6 +94,7 @@ if __name__ == '__main__':
     params_file = os.path.join(args.model_dir, 'params.json')
     assert os.path.isfile(params_file), "No json configuration file found at {}".format(params_file)
     params = myutils.Params(params_file)
+    params.batch_size = 1
 
     dfs = {}
     # Load data from .csv file
