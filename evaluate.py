@@ -61,7 +61,7 @@ def eval(file, dataloaders, dataset_sizes, net):
             probabilities.extend(probs.cpu().detach().numpy())
             predictions.extend(preds.cpu().detach().numpy())
         else:
-            # TODO
+            pass
 
     return probabilities, predictions, all_probabilities
 
