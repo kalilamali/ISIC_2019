@@ -34,9 +34,8 @@ def get_loaders(dfs, size=100, batch_size=1, num_workers=1):
             try:
                 # Load image data and get label
                 X = Image.open(self.df['image_path'][index]).convert('RGB')
-                print(self.df['image_path'])
                 y = torch.tensor(int(self.df['label_code'][index]))
-                print(self.df['label_code'])
+                print(os.path.basename(self.df['image_path'][index]), self.df['label_code'][index]))
             except IOError as err:
                 pass
 
