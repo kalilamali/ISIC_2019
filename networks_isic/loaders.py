@@ -9,7 +9,7 @@ from torchvision import transforms
 from torch.utils.data import DataLoader, Dataset
 
 
-def get_loaders(dfs, size=100, batch_size=1, num_workers=1):
+def get_loaders(dfs, size=100, batch_size=1, num_workers=1, shuffle=False):
     """
     Function that takes a dictionary of dataframes and
     returns 2 dictionaries of pytorch dataloaders and dataset_sizes
@@ -64,6 +64,6 @@ def get_loaders(dfs, size=100, batch_size=1, num_workers=1):
     # Sizes
     dataset_sizes = {x: len(image_datasets[x]) for x in dfs.keys()}
     # Loaders
-    dataloaders = {x: DataLoader(image_datasets[x], batch_size, num_workers, shuffle=False) for x in dfs.keys()}
+    dataloaders = {x: DataLoader(image_datasets[x], batch_size, num_workers, shuffle) for x in dfs.keys()}
 
     return dataloaders, dataset_sizes
