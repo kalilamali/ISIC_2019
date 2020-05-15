@@ -60,16 +60,14 @@ def eval(file, dataloaders, dataset_sizes, net):
             outputs = net(inputs)
             probs, preds = torch.max(outputs, 1)
 
-            if device == 'cuda:0':
-                all_probabilities.extend(outputs.cpu().detach().numpy())
-                print(all_probabilities)
-                probabilities.extend(probs.cpu().detach().numpy())
-                print(probabilities)
-                predictions.extend(preds.cpu().detach().numpy())
-                print(predictions)
-                break
-            else:
-                pass
+            all_probabilities.extend(outputs.cpu().detach().numpy())
+            print(all_probabilities)
+            probabilities.extend(probs.cpu().detach().numpy())
+            print(probabilities)
+            predictions.extend(preds.cpu().detach().numpy())
+            print(predictions)
+            break
+
                 #t.update()
 
     return probabilities, predictions, all_probabilities
