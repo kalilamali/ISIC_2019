@@ -50,23 +50,27 @@ def eval(file, dataloaders, dataset_sizes, net):
     phase = 'val'
     with torch.no_grad():
         # Iterate over data
-        with tqdm(total=len(dataloaders[phase])) as t:
-            # Track results
-            predictions, probabilities, all_probabilities = [],[],[]
-            for inputs, labels in dataloaders[phase]:
-                inputs = inputs.to(device)
-                labels = labels.to(device)
+        #with tqdm(total=len(dataloaders[phase])) as t:
+        # Track results
+        predictions, probabilities, all_probabilities = [],[],[]
+        for inputs, labels in dataloaders[phase]:
+            inputs = inputs.to(device)
+            labels = labels.to(device)
 
-                outputs = net(inputs)
-                probs, preds = torch.max(outputs, 1)
+            outputs = net(inputs)
+            probs, preds = torch.max(outputs, 1)
 
-                if device == 'cuda:0':
-                    all_probabilities.extend(outputs.cpu().detach().numpy())
-                    probabilities.extend(probs.cpu().detach().numpy())
-                    predictions.extend(preds.cpu().detach().numpy())
-                else:
-                    pass
-                t.update()
+            if device == 'cuda:0':
+                all_probabilities.extend(outputs.cpu().detach().numpy())
+                print(all_probabilities)
+                probabilities.extend(probs.cpu().detach().numpy())
+                print(probabilities)
+                predictions.extend(preds.cpu().detach().numpy())
+                print(predictions)
+                break
+            else:
+                pass
+                #t.update()
 
     return probabilities, predictions, all_probabilities
 
