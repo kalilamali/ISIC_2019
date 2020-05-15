@@ -50,7 +50,7 @@ def eval(file, dataloaders, dataset_sizes, net):
     phase = 'val'
     with torch.no_grad():
         # Iterate over data
-        #with tqdm(total=len(dataloaders[phase])) as t:
+        with tqdm(total=len(dataloaders[phase])) as t:
         # Track results
         predictions, probabilities, all_probabilities = [],[],[]
         for inputs, labels in dataloaders[phase]:
@@ -61,14 +61,9 @@ def eval(file, dataloaders, dataset_sizes, net):
             probs, preds = torch.max(outputs, 1)
 
             all_probabilities.extend(outputs.cpu().detach().numpy())
-            print(all_probabilities)
             probabilities.extend(probs.cpu().detach().numpy())
-            print(probabilities)
             predictions.extend(preds.cpu().detach().numpy())
-            print(predictions)
-            break
-
-                #t.update()
+            t.update(4)
 
     return probabilities, predictions, all_probabilities
 
