@@ -66,7 +66,7 @@ def eval(file, dataloaders, dataset_sizes, net):
                     predictions.extend(preds.cpu().detach().numpy())
                 else:
                     pass
-            t.update()
+                    t.update()
 
     return probabilities, predictions, all_probabilities
 
