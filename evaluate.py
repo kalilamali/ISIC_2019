@@ -52,7 +52,7 @@ def eval(file, dataloaders, dataset_sizes, net):
         # Iterate over data
         with tqdm(total=len(dataloaders[phase])) as t:
             # Track results
-            predictions, probabilities, all_probabilities, inlabels = [],[],[],[]
+            predictions, probabilities, all_probabilities, in_labels = [],[],[],[]
             for inputs, labels in dataloaders[phase]:
                 inputs = inputs.to(device)
                 labels = labels.to(device)
@@ -63,7 +63,7 @@ def eval(file, dataloaders, dataset_sizes, net):
                 all_probabilities.extend(outputs.cpu().detach().numpy())
                 probabilities.extend(probs.cpu().detach().numpy())
                 predictions.extend(preds.cpu().detach().numpy())
-                inlabels.extend(labels.cpu().detach().numpy())
+                in_labels.extend(labels.cpu().detach().numpy())
                 t.update(4)
 
     return probabilities, predictions, all_probabilities, in_labels
