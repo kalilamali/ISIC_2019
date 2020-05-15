@@ -26,7 +26,7 @@ def efficientnetb7(unfreeze=False):
 
         def forward(self, x):
             x = self.model(x)
-            x = nn.functional.softmax(x)
+            x = nn.functional.softmax(x, dim=1)
             return x
 
     net = Net()
