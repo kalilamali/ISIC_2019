@@ -18,6 +18,8 @@ import argparse
 import numpy as np
 import pandas as pd
 
+from tqdm import tqdm
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--data_dir', default='data/isic19', help="folder containing the dataset")
@@ -43,25 +45,28 @@ def eval(file, dataloaders, dataset_sizes, net):
     net.load_state_dict(checkpoint['net_state_dict'])
     net.eval()
 
-    # Track results
-    predictions, probabilities, all_probabilities = [],[],[]
 
     # Validation phase
     phase = 'val'
-    # Iterate over data
-    for inputs, labels in dataloaders[phase]:
-        inputs = inputs.to(device)
-        labels = labels.to(device)
+    with torch.no_grad():
+        # Iterate over data
+        with tqdm(total=len(dataloader)) as t:
+            # Track results
+            predictions, probabilities, all_probabilities = [],[],[]
+            for inputs, labels in dataloaders[phase]:
+                inputs = inputs.to(device)
+                labels = labels.to(device)
 
-        outputs = net(inputs)
-        probs, preds = torch.max(outputs, 1)
+                outputs = net(inputs)
+                probs, preds = torch.max(outputs, 1)
 
-        if device == 'cuda:0':
-            all_probabilities.extend(outputs.cpu().detach().numpy())
-            probabilities.extend(probs.cpu().detach().numpy())
-            predictions.extend(preds.cpu().detach().numpy())
-        else:
-            pass
+                if device == 'cuda:0':
+                    all_probabilities.extend(outputs.cpu().detach().numpy())
+                    probabilities.extend(probs.cpu().detach().numpy())
+                    predictions.extend(preds.cpu().detach().numpy())
+                else:
+                    pass
+            t.update()
 
     return probabilities, predictions, all_probabilities
 
